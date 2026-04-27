@@ -1,0 +1,142 @@
+﻿@model WorkExperienceViewModel
+
+@{
+    ViewBag.Title = "Experience";
+}
+
+<!-- ================= EXPERIENCE ================= -->
+<section class="experience-section">
+    <div class="container">
+
+        <!-- HEADER -->
+        <div class="section-header text-center mb-5">
+            <h1 class="section-title">Work Experience</h1>
+            <p class="section-subtitle">
+                My professional journey and career progression
+            </p>
+        </div>
+
+        <!-- TIMELINE -->
+        <div class="timeline">
+            @foreach (var experience in Model.WorkExperiences)
+            {
+                <div class="timeline-item">
+
+                    <!-- LEFT MARKER -->
+                    <div class="timeline-marker"></div>
+
+                    <!-- CONTENT -->
+                    <div class="timeline-content">
+
+                        <!-- POSITION -->
+                        <h3 class="experience-position">
+                            @experience.Position
+                        </h3>
+
+                        <!-- COMPANY -->
+                        <h4 class="experience-company">
+                            <i class="fas fa-building me-2"></i>
+                            @experience.Company
+                        </h4>
+
+                        <!-- DURATION -->
+                        <div class="experience-duration">
+                            <i class="fas fa-calendar-alt me-2"></i>
+                            <span>@experience.Duration</span>
+                        </div>
+
+                        <!-- DESCRIPTION -->
+                        <p class="experience-description">
+                            @experience.Description
+                        </p>
+
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ================= EDUCATION ================= -->
+<section class="education-section">
+    <div class="container">
+
+        <!-- HEADER -->
+        <div class="section-header text-center mb-5">
+            <h1 class="section-title">Education & Certifications</h1>
+        </div>
+
+        <!-- EDUCATION GRID -->
+        <div class="row g-4">
+
+            <!-- CARD 1 -->
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="education-card h-100">
+
+                    <div class="education-degree">
+                        <i class="fas fa-graduation-cap me-2"></i>
+                        Bachelor of Science in Computer Science
+                    </div>
+
+                    <div class="education-school">
+                        University of Technology
+                    </div>
+
+                    <div class="education-year">
+                        2015 - 2019
+                    </div>
+
+                    <p class="education-description">
+                        Focused on software engineering, algorithms, and modern web technologies.
+                    </p>
+
+                </div>
+            </div>
+
+            <!-- CARD 2 -->
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="education-card h-100">
+
+                    <div class="education-degree">
+                        <i class="fas fa-certificate me-2"></i>
+                        Microsoft Certified: Azure Developer Associate
+                    </div>
+
+                    <div class="education-school">
+                        Microsoft
+                    </div>
+
+                    <div class="education-year">
+                        2022
+                    </div>
+
+                    <p class="education-description">
+                        Certified in designing and building cloud applications on Azure.
+                    </p>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+@section scripts {
+    <script>
+        function revealElements() {
+            document.querySelectorAll('.timeline-item, .education-card').forEach(function (el) {
+                if (el.getBoundingClientRect().top < window.innerHeight - 100) {
+                    el.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', revealElements);
+        window.addEventListener('load', revealElements);
+        revealElements();
+    </script>
+}

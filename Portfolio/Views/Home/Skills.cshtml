@@ -1,0 +1,154 @@
+﻿@model SkillsViewModel
+
+@{
+    ViewBag.Title = "Skills";
+}
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+
+<!-- ================= SKILLS SECTION ================= -->
+<div class="modern-about-page">
+<section class="skills-section">
+    <div class="container text-center position-relative">
+        <div class="section-shell">
+            <h1 class="section-title fade-up">My Skills</h1>
+            <p class="section-subtitle fade-up">
+                Technical expertise, practical experience, and proficiency across the technologies I use to build modern web solutions.
+            </p>
+
+            <div class="row mt-5">
+                <div class="col-lg-10 mx-auto fade-up">
+                    <div class="skills-wrapper">
+                        @foreach (var skill in Model.TechnicalSkills)
+                        {
+                            <div class="skill-item">
+                                <div class="skill-name">
+                                    <span>@skill.Name</span>
+                                    <span>@skill.Percentage%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" data-progress="@skill.Percentage"></div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= TOOLS SECTION ================= -->
+<section class="tools-section">
+    <div class="container">
+        <div class="section-shell">
+            <div class="text-center">
+                <h1 class="section-title fade-up">Tools & Technologies</h1>
+                <p class="section-subtitle fade-up">
+                    The tools and technologies I use regularly to design, develop, manage, and deliver high-quality applications.
+                </p>
+            </div>
+
+            <div class="row g-4 mt-4 tools-grid">
+                <div class="col-md-3 col-sm-6 fade-up">
+                    <div class="tool-card">
+                        <div class="tool-icon"><i class="fab fa-microsoft"></i></div>
+                        <div class="tool-name">Visual Studio</div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6 fade-up">
+                    <div class="tool-card">
+                        <div class="tool-icon"><i class="fab fa-git-alt"></i></div>
+                        <div class="tool-name">Git & GitHub</div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6 fade-up">
+                    <div class="tool-card">
+                        <div class="tool-icon"><i class="fas fa-database"></i></div>
+                        <div class="tool-name">SQL Server</div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6 fade-up">
+                    <div class="tool-card">
+                        <div class="tool-icon"><i class="fab fa-bootstrap"></i></div>
+                        <div class="tool-name">Bootstrap</div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6 fade-up">
+                    <div class="tool-card">
+                        <div class="tool-icon"><i class="fab fa-html5"></i></div>
+                        <div class="tool-name">HTML5</div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6 fade-up">
+                    <div class="tool-card">
+                        <div class="tool-icon"><i class="fab fa-css3-alt"></i></div>
+                        <div class="tool-name">CSS3</div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6 fade-up">
+                    <div class="tool-card">
+                        <div class="tool-icon"><i class="fab fa-js-square"></i></div>
+                        <div class="tool-name">JavaScript</div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6 fade-up">
+                    <div class="tool-card">
+                        <div class="tool-icon"><i class="fas fa-layer-group"></i></div>
+                        <div class="tool-name">ASP.NET MVC</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+@section scripts {
+    <script>
+        let skillsAnimated = false;
+
+        function animateSkills() {
+            const skillsSection = document.querySelector('.skills-section');
+            if (!skillsSection || skillsAnimated) return;
+
+            const sectionTop = skillsSection.getBoundingClientRect().top;
+
+            if (sectionTop < window.innerHeight - 100) {
+                document.querySelectorAll('.skill-progress').forEach(function (bar) {
+                    const value = bar.getAttribute('data-progress');
+                    bar.style.width = value + '%';
+                });
+
+                skillsAnimated = true;
+            }
+        }
+
+        function revealElements() {
+            document.querySelectorAll('.fade-up').forEach(function (el) {
+                if (el.getBoundingClientRect().top < window.innerHeight - 80) {
+                    el.classList.add('active');
+                }
+            });
+        }
+
+        function runPageAnimations() {
+            revealElements();
+            animateSkills();
+        }
+
+        window.addEventListener('scroll', runPageAnimations);
+        window.addEventListener('load', runPageAnimations);
+
+        runPageAnimations();
+        setTimeout(animateSkills, 300);
+    </script>
+}

@@ -1,0 +1,119 @@
+﻿@model Portfolio.Models.ProjectsViewModel
+
+@{
+    ViewBag.Title = "Projects";
+}
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+
+
+<section class="projects-section">
+    <div class="container projects-wrapper">
+        <div class="section-shell">
+            <div class="text-center mb-5 fade-up">
+                <h1 class="section-title">My Projects</h1>
+                <p class="section-subtitle">
+                    A selection of projects that reflect my experience in clean development, modern UI, and practical problem solving.
+                </p>
+            </div>
+
+            <div class="row g-4">
+                @foreach (var project in Model.Projects)
+                {
+                    <div class="col-lg-4 col-md-6 fade-up">
+                        <div class="project-card">
+                            <div class="project-header">
+                                <i class="fas fa-code"></i>
+                            </div>
+
+                            <h3 class="project-title">@project.Title</h3>
+
+                            <p class="project-description">
+                                @project.Description
+                            </p>
+
+                            <div class="project-tech">
+                                @foreach (var tech in project.Technologies.Split(','))
+                                {
+                                    <span class="tech-badge">@tech.Trim()</span>
+                                }
+                            </div>
+
+                            <div class="project-links">
+                                @if (!string.IsNullOrEmpty(project.GithubUrl))
+                                {
+                                    <a href="@project.GithubUrl"
+                                       target="_blank"
+                                       class="project-btn btn-outline-custom">
+                                        <i class="fab fa-github"></i>
+                                        <span>GitHub</span>
+                                    </a>
+                                }
+
+                                @if (!string.IsNullOrEmpty(project.VideoUrl))
+                                {
+                                    <button type="button"
+                                            class="project-btn btn-primary-custom"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#videoModal"
+                                            data-video="@project.VideoUrl">
+                                        <i class="fas fa-video"></i>
+                                        <span>Watch Demo</span>
+                                    </button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="videoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <video id="modalVideo" controls>
+                    <source src="" type="video/mp4">
+                </video>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        function revealProjects() {
+            document.querySelectorAll('.projects-section .fade-up').forEach(function (el) {
+                if (el.getBoundingClientRect().top < window.innerHeight - 100) {
+                    el.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', revealProjects);
+        window.addEventListener('load', revealProjects);
+        revealProjects();
+
+        var videoModal = document.getElementById('videoModal');
+        var modalVideo = document.getElementById('modalVideo');
+
+        if (videoModal && modalVideo) {
+            videoModal.addEventListener('show.bs.modal', function (event) {
+                var button = event.relatedTarget;
+                var videoSrc = button.getAttribute('data-video');
+                modalVideo.src = videoSrc;
+                modalVideo.load();
+            });
+
+            videoModal.addEventListener('hidden.bs.modal', function () {
+                modalVideo.pause();
+                modalVideo.removeAttribute('src');
+                modalVideo.load();
+            });
+        }
+    </script>
+}
