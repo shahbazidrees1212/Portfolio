@@ -2,7 +2,8 @@
 using Portfolio.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-
+// Railway/Docker port
+builder.WebHost.UseUrls("http://0.0.0.0:8080");
 // Add services
 builder.Services.AddControllersWithViews();
 
